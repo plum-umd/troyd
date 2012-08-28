@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/repos/jfoster/!svn/ver/15593/android/troyd/troyd
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/repos/jfoster/!svn/ver/14737/android/troyd/troyd/.classpath
+END
+proguard.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/repos/jfoster/!svn/ver/14630/android/troyd/troyd/proguard.cfg
+END
+project.properties
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/jfoster/!svn/ver/14737/android/troyd/troyd/project.properties
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/repos/jfoster/!svn/ver/14630/android/troyd/troyd/.project
+END
+AndroidManifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/jfoster/!svn/ver/15593/android/troyd/troyd/AndroidManifest.xml
+END
+ant.properties
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/jfoster/!svn/ver/14682/android/troyd/troyd/ant.properties
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/repos/jfoster/!svn/ver/14630/android/troyd/troyd/build.xml
+END
