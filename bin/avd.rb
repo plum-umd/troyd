@@ -46,12 +46,13 @@ class AVD
     system("#{ADR} delete avd -n #{@avd}")
   end
 
-  A10 = ADR + "-10"
+  A10 = ADR + "-10" # Android 2.3.3
+  G10 = "Google Inc.:Google APIs:10" # to use Google Maps
   AOPT = "-s WQVGA432" # resolution option
 
   def create
     delete
-    system("echo | #{ADR} create avd -n #{@avd} -t #{A10} #{AOPT}")
+    system("echo | #{ADR} create avd -n #{@avd} -t \"#{G10}\" #{AOPT}")
   end
 
   EM = "emulator"
@@ -61,12 +62,11 @@ class AVD
     system("#{EM} -avd #{@avd} #{OPT} #{@opt} &")
   end
 
-  ARM = EM + "-arm"
-
   def stop
-    p = RUBY_PLATFORM.downcase
-    system("pkill #{ARM}")            if p.include? "linux"
-    system("killall #{ARM}")          if p.include? "darwin"
-    system("taskkill /IM #{ARM}.exe") if p.include? "mswin"
+    _, ems = ADB.devices_list
+    ems.each do |em| # "emulator-#{port}"
+      port = em.split('-')[-1].to_i
+      system("echo kill | nc -w 2 localhost #{port}")
+    end
   end
 end

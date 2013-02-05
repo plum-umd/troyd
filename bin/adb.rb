@@ -52,6 +52,7 @@ module ADB
   @@am = @@acmd + " shell am"
   @@run = @@am + RUN
 
+  # Set the specific device to use
   def ADB.device(serial)
     @@acmd = "adb -s #{serial}"
     @@lcat = @@acmd + " logcat"
@@ -63,21 +64,30 @@ module ADB
 
   TO = 2
 
-  def ADB.devices
-    dv_cnt = 0
-    em_cnt = 0
-    dvs = `adb devices`
-    dvs.each_line do |line|
-      dv = line =~ /.+device$/
-      dv_cnt = dv_cnt + 1 if dv != nil
-      em = line =~ /emulator-\d+\s+device$/
-      em_cnt = em_cnt + 1 if em != nil
+  # Get the list of active devices
+  #
+  # @return [Array<Array<String>>] two tuple of devices, emulators,
+  # containing the name of the devices as identified by ADB
+  def ADB.devices_list
+    dvs = []
+    ems = []
+    `adb devices`.each_line do |line|
+      dvs << line.split[0] if line =~ /.+device$/
+      ems << line.split[0] if line =~ /emulator-\d+\s+device$/
     end
-    return dv_cnt, em_cnt
+    return dvs, ems
   end
 
+  # Get the number of active devices / emulators
+  #
+  # @return [Array<Array<Fixnum>>] number of devices, emulators
+  def ADB.devices_cnt
+    ADB.devices_list.map { |x| x.length }
+  end
+
+  # Check there are any available devices or emulators
   def ADB.online?
-    dv_cnt, em_cnt = ADB.devices
+    dv_cnt, em_cnt = ADB.devices_cnt
     return false if dv_cnt == 0
     if em_cnt > 0 
       begin
@@ -95,14 +105,21 @@ module ADB
   SUCC = "Success"
   FAIL = "Failure"
 
+  # Uninstall a package
+  # @param pkg [String] The package name, as identified by Android
   def ADB.uninstall(pkg=PKG)
     sync_msg("#{@@acmd} uninstall #{pkg}", [SUCC, FAIL])
   end
 
+  # Install an APK
+  # @param apk [String] Path to the APK
   def ADB.install(apk)
     sync_msg("#{@@acmd} install #{apk}", [SUCC])
   end
 
+  # Install all APKs in a directory
+  # @param dir [String] The directory from which to pull the APKs
+  # @param cond [String] String to filter APKs by string inclusion.
   def ADB.instAll(dir, cond)
     Dir.glob(dir + "/*.apk").each do |file|
       if file.downcase.include? cond
@@ -112,10 +129,12 @@ module ADB
     end
   end
 
+  # Start a service on the given package
   def ADB.ignite(act)
     sync_logcat("#{@@am} startservice -n #{PKG}/.Ignite -e AUT #{act}", @@fltr)
   end
 
+  # Execute some command on the given APK
   def ADB.cmd(cmd, opts)
     ext = ""
     opts.each do |k, v|
