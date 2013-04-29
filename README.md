@@ -13,7 +13,7 @@ Publications
   Jinseong Jeon and Jeffrey S. Foster.
   CS-TR-5013, Department of Computer Science, University of Maryland, College Park, Aug 2012.
 
-[tr]: http://hdl.handle.net/1903/12880
+[tr]: http://dx.doi.org/1903/12880
 
 Requirements
 ------------
