@@ -44,7 +44,7 @@ public class Ignite extends IntentService {
 	}
 
 	// to start this server,
-	// `adb shell am startservice -n umd.redexer/.Ignite -e AUT <pkg>
+	// `adb shell am startservice -n umd.troyd/.Ignite -e AUT <pkg>
 	// <pkg> should be equal to the target package name mentioned at manifest
 	@Override
 	protected void onHandleIntent(Intent argv) {
