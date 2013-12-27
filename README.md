@@ -22,11 +22,12 @@ To get started, install [Android SDK][sdk] first and set paths to Android
 base tools, e.g., adb, aapt, etc.  You can do so by adding the followings
 to your profile:
 
-    ANDROID_HOME=$HOME/sdk # your own path here!
+    ANDROID_HOME=$HOME/android-sdk    # your own path here!
     export ANDROID_HOME
 
-    PATH=$ANDROID_HOME/tools:$PATH
-    PATH=$ANDROID_HOME/platform-tools:$PATH
+    PATH=$PATH:$ANDROID_HOME/tools
+    PATH=$PATH:$ANDROID_HOME/platform-tools
+    PATH=$PATH:$ANDROID_HOME/build-tools/19.0.0    # installed version number
     export PATH
 
 The main scripts are written in [Ruby][rb] and require [RubyGems][gem], a Ruby
