@@ -79,7 +79,7 @@ public class Troy extends Instrumentation {
 		Activity act = startActivitySync(aut);
 		solo = new Solo(this, act);
 		solo.getCurrentActivity(); // to collect all opened activities
-		getContext().registerReceiver(r, new IntentFilter(Intent.ACTION_RUN));
+		act.registerReceiver(r, new IntentFilter(Intent.ACTION_RUN));
 		KeyguardManager km = (KeyguardManager)
 				getContext().getSystemService(Context.KEYGUARD_SERVICE);
 		km.newKeyguardLock(tag).disableKeyguard();
