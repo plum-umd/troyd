@@ -32,7 +32,7 @@
 
 package umd.troyd;
 
-import com.jayway.android.robotium.solo.Solo;
+import com.robotium.solo.Solo;
 
 import android.app.Activity;
 import android.app.Instrumentation;
