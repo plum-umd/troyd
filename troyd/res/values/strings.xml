@@ -2,4 +2,5 @@
 <resources>
 	<string name="app_name">Troyd</string>
 	<string name="uid">umd.troyd</string>
+	<string name="process">umd.troyd.process</string>
 </resources>

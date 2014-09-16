@@ -49,8 +49,8 @@ module AAPT
         if element
           kind = element[1]
         end
-        act = l.match(/android:targetActivity\(\w+\)\=\"([^\"]+)\"/)
-        if act and kind == "activity-alias"
+        act = l.match(/android:name\(\w+\)\=\"([^\"]+)\"/)
+        if act and kind.include? "activity" # e.g., "activity-alias"
           act_found = act[1]
         end
         launch = l.match(/android.intent.category.LAUNCHER/)

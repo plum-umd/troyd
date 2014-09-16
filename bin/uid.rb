@@ -45,9 +45,16 @@ module Uid
     f.close
 
     pref = "android"
-    roots = doc.xpath("/manifest")
+    manifest = "/manifest"
+    roots = doc.xpath(manifest)
     roots.each do |root|
       root["#{pref}:sharedUserId"] = "umd.troyd"
+    end
+
+    application = "#{manifest}/application"
+    apps = doc.xpath(application)
+    apps.each do |app|
+      app["#{pref}:process"] = "umd.troyd.process"
     end
 
     f = File.open(meta, 'w')
