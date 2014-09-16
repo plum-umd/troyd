@@ -69,8 +69,8 @@ private
       else
         targets[0]
       end
-    else # no target installed?
-      tgt
+    else
+      raise "no target SDK installed?"
     end
   end
 
