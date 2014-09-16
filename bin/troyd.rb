@@ -39,7 +39,8 @@ module Troyd
 
   def Troyd.setenv
     aup = "android update project"
-    system("#{aup} -t android-10 -p #{TDIR} #{QUIET}")
+    tgt = Troyd.target
+    system("#{aup} -t android-#{tgt} -p #{TDIR} #{QUIET}")
   end
 
   require "#{TROYD}/resign"
@@ -57,6 +58,21 @@ module Troyd
   end
 
 private
+
+  def Troyd.target(tgt="19")
+    pattern = /\"android-(.+)\"/
+    targets = `android list targets | grep android-`.scan(pattern)
+    if targets
+      targets.flatten!
+      if targets.include? tgt
+        tgt
+      else
+        targets[0]
+      end
+    else # no target installed?
+      tgt
+    end
+  end
 
   require 'nokogiri'
 
