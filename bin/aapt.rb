@@ -36,8 +36,34 @@ module AAPT
   end
 
   def AAPT.launcher(apk)
-    act = badg(apk, "launchable", /name='(\S+)'\s*label=/)
-    act[0][0] if act and act[0]
+    acts = badg(apk, "launchable", /name='(\S+)'\s*label=/)
+    if acts and acts[0]
+      acts[0][0]
+    else
+      manifest = AAPT.manifest(apk)
+      kind = nil
+      act_found = nil
+      launch_found = nil
+      manifest.each_line do |l|
+        element = l.match(/E: (\S+)/)
+        if element
+          kind = element[1]
+        end
+        act = l.match(/android:targetActivity\(\w+\)\=\"([^\"]+)\"/)
+        if act and kind == "activity-alias"
+          act_found = act[1]
+        end
+        launch = l.match(/android.intent.category.LAUNCHER/)
+        if launch
+          if launch_found
+            raise "more than two LAUNCHERs?"
+          else
+            launch_found = act_found
+          end
+        end
+      end
+      launch_found
+    end
   end
 
   def AAPT.perm(apk)
@@ -49,6 +75,11 @@ private
   def AAPT.badg(apk, what, pattern)
     `aapt dump badging #{apk} | grep \"#{what}\"`.scan(pattern)
   end
+
+  def AAPT.manifest(apk)
+    `aapt dump xmltree #{apk} AndroidManifest.xml`
+  end
+
 end
 
 if __FILE__ == $0
